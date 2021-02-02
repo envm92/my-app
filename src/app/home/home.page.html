@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      My App
+      <ion-text>{{resultado}}</ion-text>
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -14,6 +14,21 @@
   </ion-header>
 
   <div id="container">
-    <strong>Are you ready?</strong>
+    <form class="example-form">
+      <mat-form-field class="example-full-width">
+        <mat-label>Titulo de la app</mat-label>
+        <input class=form-control matInput placeholder="Ingresa el nombre de la app" (input)="onInput($event)" (input)="valida($event)">
+      </mat-form-field>
+      <mat-error *ngIf="!activo">
+        Name must contain only letter or spaces
+      </mat-error>
+    </form>
   </div>
+  <section>
+    <div class="example-label">Boton</div>
+    <div class="example-button-row">
+      <button mat-raised-button color="primary" disabled={{!activo}}>Boton</button>
+    </div>
+  </section>
+  
 </ion-content>
