@@ -14,21 +14,48 @@
   </ion-header>
 
   <div id="container">
-    <form class="example-form">
-      <mat-form-field class="example-full-width">
-        <mat-label>Titulo de la app</mat-label>
-        <input class=form-control matInput placeholder="Ingresa el nombre de la app" (input)="onInput($event)" (input)="valida($event)">
-      </mat-form-field>
-      <mat-error *ngIf="!activo">
-        Name must contain only letter or spaces
-      </mat-error>
+    <form [formGroup]="formularioReactivo"  novalidate="">
+      <input class="form-control" type="text" placeholder="Nombre" formControlName="nombre" required [pattern]="nombrePattern">
+        <div *ngIf="formularioReactivo.controls['nombre'].errors?.required" class="invalid-feedback">
+          Nombre requerido.
+        </div> 
+        <div *ngIf="formularioReactivo.controls['nombre'].errors?.pattern" class="invalid-feedback" > 
+        Nombre invalido.
+        </div> 
+      <input class="form-control" type="text" placeholder="Apellido" formControlName="apellido" required [pattern]="nombrePattern">
+        <div *ngIf="formularioReactivo.controls['apellido'].errors?.required" class="invalid-feedback"> 
+          Apellido requerido.
+        </div> 
+        <div *ngIf="formularioReactivo.controls['apellido'].errors?.pattern" class="invalid-feedback"> 
+          Apellido invalido.
+        </div> 
+      <input class="form-control" type="email" placeholder="Email" formControlName="correo" >
+      <div *ngIf="correo.errors"> 
+        <div *ngIf="correo.errors.required">
+            Correo requerido.
+        </div> 		   
+        <div *ngIf="correo.errors.pattern">
+            Correo no valido.
+        </div> 
+     </div> 
+      <input  class="form-control"  matInput [type]="hide ? 'password' : 'text'" placeholder="Password" formControlName="password" required [pattern]="passwordPattern">
+      <div *ngIf="formularioReactivo.controls['password'].errors?.minlength" class="invalid-feedback">
+        Por lo menos 8 caracteres
+      </div>
+      <div *ngIf="formularioReactivo.controls['password'].errors?.maxlength" class="invalid-feedback">
+      No mas de 32 caracteres
+      </div>
+      <div *ngIf="formularioReactivo.controls['password'].errors?.pattern" class="invalid-feedback"> 
+      Debe contener minimo un caracter especial
+      </div> 
     </form>
+
+    <section>
+      <div class="example-label">¿Deseas mostrar el formulario en consola?</div>
+      <div class="example-button-row">
+        <button mat-raised-button type="submit"  [disabled]="valida()" (click)="submit()">Submit</button>
+      </div>
+    </section>
   </div>
-  <section>
-    <div class="example-label">Boton</div>
-    <div class="example-button-row">
-      <button mat-raised-button color="primary" disabled={{!activo}}>Boton</button>
-    </div>
-  </section>
   
 </ion-content>
