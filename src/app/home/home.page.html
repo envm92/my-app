@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
+    <ion-title id="title">
       My App
     </ion-title>
   </ion-toolbar>
@@ -9,11 +9,23 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">My App</ion-title>
+      <ion-title size="large" id="title">My App</ion-title>
     </ion-toolbar>
   </ion-header>
 
   <div id="container">
     <strong>Are you ready?</strong>
+    <div>
+      <form class="example-form">
+        <mat-form-field class="example-full-width">
+          <mat-label>Nombre</mat-label>
+          <input type="text" matInput placeholder="Nombre" (input)="onKeyPressEvent($event)" />
+          <mat-error *ngIf="!validInput">
+            Please enter valid text, only alphabetical characters and spaces.
+          </mat-error>
+        </mat-form-field>
+      </form>
+    </div>
+    <button mat-raised-button color="primary" [disabled]="!validInput">Primary</button>
   </div>
 </ion-content>
