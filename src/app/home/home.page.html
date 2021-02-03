@@ -1,19 +1,47 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      My App
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">My App</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Are you ready?</strong>
-  </div>
+<ion-content>
+  <form [formGroup]="myLoginForm" (ngSubmit)="loginUser(myLoginForm.value)">
+    <ion-item>
+      <ion-label> Nombre </ion-label>
+      <ion-input formControlName="nombre"> </ion-input>
+    </ion-item>
+    <ng-container *ngFor="let validation of validationMessages.nombre">
+      <div
+        *ngIf="myLoginForm.get('nombre').hasError(validation.type)&&(myLoginForm.get('nombre').dirty)">
+        {{validation.message}}
+      </div>
+    </ng-container>
+    <ion-item>
+      <ion-label> Apellido </ion-label>
+      <ion-input formControlName="apellido"> </ion-input>
+    </ion-item>
+    <ng-container *ngFor="let validation of validationMessages.apellido">
+      <div
+        *ngIf="myLoginForm.get('apellido').hasError(validation.type)&&(myLoginForm.get('apellido').dirty)">
+        {{validation.message}}
+      </div>
+    </ng-container>
+    <ion-item>
+      <ion-label> Email </ion-label>
+      <ion-input formControlName="email"> </ion-input>
+    </ion-item>
+    <div>
+      <ng-container *ngFor="let validation of validationMessages.email">
+        <div
+          *ngIf="myLoginForm.get('email').hasError(validation.type)&& (myLoginForm.get('email').dirty)">
+          {{validation.message}}
+        </div>
+      </ng-container>
+    </div>
+    <ion-item>
+      <ion-label> Password </ion-label>
+      <ion-input type="password" formControlName="password"> </ion-input>
+    </ion-item>
+    <ng-container *ngFor="let validation of validationMessages.password">
+      <div
+        *ngIf="myLoginForm.get('password').hasError(validation.type)&&(myLoginForm.get('password').dirty)">
+        {{validation.message}}
+      </div>
+    </ng-container>
+    <ion-button expand="full" shape="round" color="success" [disabled]="!myLoginForm.valid" type="submit">Ok</ion-button>
+  </form>
 </ion-content>
