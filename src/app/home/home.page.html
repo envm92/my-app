@@ -14,6 +14,55 @@
   </ion-header>
 
   <div id="container">
-    <strong>Are you ready?</strong>
+   <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="profile-form">
+     <!-- NOMBRE -->
+      <mat-form-field class="full-width">
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="nombreFormControl" placeholder="Nombre">
+        <mat-error *ngIf="profileForm.controls['nombreFormControl'].hasError('required')">
+          Campo requerido
+        </mat-error>
+        <mat-error *ngIf="profileForm.controls['nombreFormControl'].hasError('pattern') && !profileForm.controls['nombreFormControl'].hasError('required')">
+          Solo letras y espacios
+        </mat-error>
+      </mat-form-field>
+      <!-- APELLIDO -->
+      <mat-form-field class="full-width">
+        <mat-label>Apellido</mat-label>
+        <input matInput formControlName="apellidoFormControl" placeholder="Apellido">
+        <mat-error *ngIf="profileForm.controls['apellidoFormControl'].hasError('required')">
+          Campo requerido
+        </mat-error>
+        <mat-error *ngIf="profileForm.controls['apellidoFormControl'].hasError('pattern') && !profileForm.controls['apellidoFormControl'].hasError('required')">
+          Solo letras y espacios
+        </mat-error>
+      </mat-form-field>
+      <!-- EMAIL -->
+      <mat-form-field class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="emailFormControl" placeholder="Email">
+        <mat-error *ngIf="profileForm.controls['emailFormControl'].hasError('email') && !profileForm.controls['emailFormControl'].hasError('required')">
+          Introduzca un email valido
+        </mat-error>
+        <mat-error *ngIf="profileForm.controls['emailFormControl'].hasError('required')">
+          Campo requerido
+        </mat-error>
+      </mat-form-field>
+      <!-- PASSWORD -->
+      <mat-form-field class="full-width">
+        <mat-label>Password</mat-label>
+        <input type="password" matInput formControlName="passwordFormControl" placeholder="Password">
+        <mat-error *ngIf="profileForm.controls['passwordFormControl'].hasError('required')">
+          Campo requerido
+        </mat-error>
+        <mat-error *ngIf="profileForm.controls['passwordFormControl'].hasError('pattern') && !profileForm.controls['passwordFormControl'].hasError('required')">
+          Se requiere al menos una letra, un numero y un caracter especial (?!$.-%&*) 
+        </mat-error>
+        <mat-error *ngIf="profileForm.controls['passwordFormControl'].hasError('minLength')">
+          El password debe tener entre 8 y 12 caracteres
+        </mat-error>
+      </mat-form-field>
+      <button mat-raised-button type="submit" color="primary" [disabled]="!profileForm.valid">Sumbit</button>
+   </form>
   </div>
 </ion-content>

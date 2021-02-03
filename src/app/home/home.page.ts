@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -6,7 +7,36 @@ import { Component } from '@angular/core';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  profileForm: FormGroup;
+  nombre: string;
+  apellido: string;
+  email: string;
+  password: string;
+  
+  constructor() {
+    this.profileForm = new FormGroup({
+      nombreFormControl: new FormControl('', [
+        Validators.required,
+        Validators.pattern('[a-zA-Z ]+')
+      ]),
+      apellidoFormControl: new FormControl('', [
+        Validators.required,
+        Validators.pattern('[a-zA-Z ]+')
+      ]),
+      emailFormControl: new FormControl('', [
+        Validators.required,
+        Validators.email
+      ]),
+      passwordFormControl: new FormControl('', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(12),
+        Validators.pattern(/(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[?!$.\-%&*])/)
+      ]),
+    });
+  }
 
-  constructor() {}
-
+  onSubmit() {
+    console.log(this.profileForm.value);
+  }
 }
