@@ -29,15 +29,13 @@
         <div *ngIf="formularioReactivo.controls['apellido'].errors?.pattern" class="invalid-feedback"> 
           Apellido invalido.
         </div> 
-      <input class="form-control" type="email" placeholder="Email" formControlName="correo" >
-      <div *ngIf="correo.errors"> 
-        <div *ngIf="correo.errors.required">
-            Correo requerido.
-        </div> 		   
-        <div *ngIf="correo.errors.pattern">
-            Correo no valido.
-        </div> 
-     </div> 
+      <input class="form-control" type="email" placeholder="Email" formControlName="correo" required [pattern]="emailPattern">
+      <div *ngIf="formularioReactivo.controls['correo'].errors?.required" class="invalid-feedback"> 
+        Correo requerido.
+      </div> 
+      <div *ngIf="formularioReactivo.controls['correo'].errors?.pattern" class="invalid-feedback"> 
+        Correo invalido.
+      </div> 
       <input  class="form-control"  matInput [type]="hide ? 'password' : 'text'" placeholder="Password" formControlName="password" required [pattern]="passwordPattern">
       <div *ngIf="formularioReactivo.controls['password'].errors?.minlength" class="invalid-feedback">
         Por lo menos 8 caracteres
@@ -53,9 +51,10 @@
     <section>
       <div class="example-label">¿Deseas mostrar el formulario en consola?</div>
       <div class="example-button-row">
-        <button mat-raised-button type="submit"  [disabled]="valida()" (click)="submit()">Submit</button>
+        <button mat-raised-button type="submit"  [disabled]=!formularioReactivo.valid (click)=usersSrv.getUsers()>Submit</button>
       </div>
     </section>
   </div>
+
   
 </ion-content>

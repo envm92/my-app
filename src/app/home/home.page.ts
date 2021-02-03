@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UserService } from 'src/services/users.service';
 
 @Component({
   selector: 'app-home',
@@ -7,8 +8,16 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  nombrePattern = "^[A-Za-z ]+$";
+  emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
+  passwordPattern = "(([A-Za-z0-9])*([!@#$%^&*()_+-={};':])+)+|(([!@#$%^&*()_+-={};':])+([A-Za-z0-9])*)+"
+  resultado="Valor por default";
+  hide = true;
   formularioReactivo: FormGroup;
-  constructor() {
+  constructor(
+    private usersSrv: UserService
+  ) {
+
     this.formularioReactivo = new FormGroup({
       'nombre': new FormControl('', [
         Validators.required,
@@ -29,32 +38,23 @@ export class HomePage {
         Validators.pattern(this.passwordPattern)
       ])
     })
+    
+  usersSrv.getUsers();
   }
 
-submit() {
-  console.log('nombre: ' + this.formularioReactivo.value.nombre)
-  console.log('apellido: ' + this.formularioReactivo.value.apellido)
-  console.log('correo: ' + this.formularioReactivo.value.correo)
-  console.log('password: ' + this.formularioReactivo.value.password)
-}
-  
-valida(){
-  if (this.formularioReactivo.valid) {
-    return(false)
-  } else {
-    return(true)
+  submit() {
+    console.log('nombre: ' + this.formularioReactivo.value.nombre)
+    console.log('apellido: ' + this.formularioReactivo.value.apellido)
+    console.log('correo: ' + this.formularioReactivo.value.correo)
+    console.log('password: ' + this.formularioReactivo.value.password)
   }
-}
 
-  nombrePattern = "^[A-Za-z ]+$";
-  emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
-  passwordPattern = "(([A-Za-z0-9])*([!@#$%^&*()_+-={};':])+)+|(([!@#$%^&*()_+-={};':])+([A-Za-z0-9])*)+"
-  resultado="Valor por default";
-  hide = true;
-
-get correo() {
-  return this.formularioReactivo.get('correo');
-} 
-
+  valida(){
+    if (this.formularioReactivo.valid) {
+      return(false)
+    } else {
+      return(true)
+    }
+  }
 }
 
