@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl,  FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+
 
 @Component({
   selector: 'app-home',
@@ -6,23 +9,68 @@ import { Component } from '@angular/core';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  entrada;
+  @ViewChild('passwordEyeRegister') passwordEye;
+  passwordTypeInput  =  'password';
+  iconpassword  =  'eye-off';
+  togglePasswordMode() {
+    this.passwordTypeInput  =  this.passwordTypeInput  ===  'text'  ?  'password'  :  'text';
+    this.iconpassword  =  this.iconpassword  ===  'eye-off'  ?  'eye'  :  'eye-off';
+    this.passwordEye.el.setFocus();
+}
 
-  constructor() {}
 
-  validaentrada(input) {
-    let regex = new RegExp("^[a-zA-Z ]+$");
-    this.entrada = regex.test(input);
+  FormField :FormGroup;
+  ValidationField={
+    email:[
+      {type:"required",
+       message:"Requerido para continuar"},
+      {type:"pattern",
+       message:"email incorrecto, intente de nuevo"}
+    ],
+    password:[
+      {type:"required",
+       message:"Requerido para continuar"},
+      {type:"pattern",
+       message:"Se requiere al menos una letra, un numero y un caracter especial (?!$.-%&*)"}
+    ],
+    nombre:[
+      {type:"required",
+       message:"Requerido para continuar"},
+      {type:"pattern",
+       message:"nombre incorrecto, intente de nuevo, recuerde no usar numeros"}
+    ],
+    apellido:[
+      {type:"required",
+       message:"Requerido para continuar"},
+      {type:"pattern",
+       message:"apellido incorrecto, intente de nuevo, recuerda no usar numeros"}
+    ]
   }
-
-  onKeyPressEvent(event: KeyboardEvent) {
-    const value = event.target.value;
-    const title = document.querySelector('#title');
-    this.validaentrada(value);
-    if (this.entrada) {
-      title.textContent = value;
-    } else {
-      title.textContent = 'Solo puedes ingresar caractéres alfabéticos y especios, intenta de nuevo.';
-    }
+  constructor(private FormBuilder:FormBuilder) { 
+    this.FormField=this.FormBuilder.group({
+      nombre: new FormControl("",
+        Validators.compose([
+        Validators.required,
+        Validators.pattern("[a-zA-Z ]+")
+      ])),
+      apellido:new FormControl("",
+        Validators.compose([
+        Validators.required,
+        Validators.pattern("^[a-zA-Z]+(([ ][a-zA-Z ])?[a-zA-Z])*$")
+      ])),
+      email:new FormControl("",
+        Validators.compose([
+        Validators.required,
+        Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")
+      ])),
+      password:new FormControl("",
+        Validators.compose([
+        Validators.required,
+        Validators.pattern("(([A-Za-z0-9])*([!@#$%^&*()_+-={};':])+)+|(([!@#$%^&*()_+-={};':])+([A-Za-z0-9])*)+")
+      ]))
+    })
+  }
+  submit(Login) {
+    console.log(Login)
   }
 }
