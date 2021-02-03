@@ -43,13 +43,4 @@ submit() {
   console.log('correo: ' + this.formularioReactivo.value.correo)
   console.log('password: ' + this.formularioReactivo.value.password)
 }
-  
-valida(){
-  if (this.formularioReactivo.valid) {
-    return(false)
-  } else {
-    return(true)
-  }
-}
-
 }
