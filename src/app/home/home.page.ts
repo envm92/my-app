@@ -7,6 +7,12 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  nombrePattern = "^[A-Za-z ]+$";
+  emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
+  passwordPattern = "(([A-Za-z0-9])*([!@#$%^&*()_+-={};':])+)+|(([!@#$%^&*()_+-={};':])+([A-Za-z0-9])*)+"
+  resultado="Valor por default";
+  hide = true;
+
   formularioReactivo: FormGroup;
   constructor() {
     this.formularioReactivo = new FormGroup({
@@ -46,15 +52,4 @@ valida(){
   }
 }
 
-  nombrePattern = "^[A-Za-z ]+$";
-  emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$";
-  passwordPattern = "(([A-Za-z0-9])*([!@#$%^&*()_+-={};':])+)+|(([!@#$%^&*()_+-={};':])+([A-Za-z0-9])*)+"
-  resultado="Valor por default";
-  hide = true;
-
-get correo() {
-  return this.formularioReactivo.get('correo');
-} 
-
 }
-
