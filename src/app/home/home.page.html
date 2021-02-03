@@ -58,8 +58,9 @@
         <mat-error *ngIf="profileForm.controls['passwordFormControl'].hasError('pattern') && !profileForm.controls['passwordFormControl'].hasError('required')">
           Se requiere al menos una letra, un numero y un caracter especial (?!$.-%&*) 
         </mat-error>
-        <mat-error *ngIf="profileForm.controls['passwordFormControl'].hasError('minLength')">
-          El password debe tener entre 8 y 12 caracteres
+        <mat-error *ngIf="profileForm.controls['passwordFormControl'].hasError('minlength')
+                          || profileForm.controls['passwordFormControl'].hasError('maxlength')">
+          El password debe tener entre 8 y 32 caracteres
         </mat-error>
       </mat-form-field>
       <button mat-raised-button type="submit" color="primary" [disabled]="!profileForm.valid">Sumbit</button>

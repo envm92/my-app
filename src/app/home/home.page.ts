@@ -30,7 +30,7 @@ export class HomePage {
       passwordFormControl: new FormControl('', [
         Validators.required,
         Validators.minLength(8),
-        Validators.maxLength(12),
+        Validators.maxLength(32),
         Validators.pattern(/(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[?!$.\-%&*])/)
       ]),
     });
