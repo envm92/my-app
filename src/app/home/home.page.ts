@@ -40,21 +40,21 @@ export class HomePage {
     })
     
   usersSrv.getUsers();
+  
   }
 
   submit() {
+    this.usersSrv.postUsers({
+      "name": {"stringValue": this.formularioReactivo.value.nombre},
+      "password":  {"stringValue": this.formularioReactivo.value.password},
+      "lastName":  {"stringValue": this.formularioReactivo.value.apellido},
+      "email":  {"stringValue": this.formularioReactivo.value.correo}
+
+});
     console.log('nombre: ' + this.formularioReactivo.value.nombre)
     console.log('apellido: ' + this.formularioReactivo.value.apellido)
     console.log('correo: ' + this.formularioReactivo.value.correo)
     console.log('password: ' + this.formularioReactivo.value.password)
-  }
-
-  valida(){
-    if (this.formularioReactivo.valid) {
-      return(false)
-    } else {
-      return(true)
-    }
   }
 }
 
