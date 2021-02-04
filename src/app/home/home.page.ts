@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserService } from 'src/services/users.service';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-home',
@@ -14,9 +15,8 @@ export class HomePage {
   resultado="Valor por default";
   hide = true;
   formularioReactivo: FormGroup;
-  constructor(
-    private usersSrv: UserService
-  ) {
+  loading: boolean;
+  constructor( private usersSrv: UserService, private dialog: MatDialog ) {
 
     this.formularioReactivo = new FormGroup({
       'nombre': new FormControl('', [
@@ -39,22 +39,46 @@ export class HomePage {
       ])
     })
     
-  usersSrv.getUsers();
+    usersSrv.getUsers();
   
   }
 
   submit() {
+    this.loading = true;
     this.usersSrv.postUsers({
       "name": {"stringValue": this.formularioReactivo.value.nombre},
       "password":  {"stringValue": this.formularioReactivo.value.password},
       "lastName":  {"stringValue": this.formularioReactivo.value.apellido},
       "email":  {"stringValue": this.formularioReactivo.value.correo}
+    }).subscribe(
+      data  => {
+        this.loading = false;
+        console.log("POST Request is successful ", data);
+        this.openDialog('Exito', 'Usuario posteado');
+        this.formularioReactivo.reset();      
+        },
+        error  => {
+        this.loading = false;
+        console.log("Error", error);  
+        this.openDialog('Error', 'Usuario no posteado');  
+      }
+    )
+  }
 
-});
-    console.log('nombre: ' + this.formularioReactivo.value.nombre)
-    console.log('apellido: ' + this.formularioReactivo.value.apellido)
-    console.log('correo: ' + this.formularioReactivo.value.correo)
-    console.log('password: ' + this.formularioReactivo.value.password)
+  openDialog(title: string, text: string) {
+    this.dialog.open(DialogElement, {
+      data: {
+        title: title,
+        text: text
+      }
+    });
   }
 }
 
+@Component({
+  selector: 'dialog-element',
+  templateUrl: 'dialog-element.html'
+})
+export class DialogElement {
+  constructor(@Inject(MAT_DIALOG_DATA) public data) {}
+}; 
