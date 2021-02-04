@@ -8,6 +8,8 @@ import { HomePageRoutingModule } from './home-routing.module';
 
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDialogModule } from '@angular/material/dialog'
 
 @NgModule({
   imports: [
@@ -17,7 +19,9 @@ import { MatButtonModule } from '@angular/material/button';
     IonicModule,
     HomePageRoutingModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatProgressSpinnerModule,
+    MatDialogModule
   ],
   declarations: [HomePage]
 })
